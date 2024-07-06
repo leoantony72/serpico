@@ -1,0 +1,62 @@
+@import url("https://fonts.googleapis.com/css2?family=Sen:wght@700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Outfit:wght@400;500&display=swap");
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  background-color: #fafefc;
+}
+
+.navbar {
+  width: 100%;
+  height: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  background-color: #fafefc;
+}
+
+.logo {
+  color: rgb(43, 136, 89);
+  font-family: "Sen";
+  font-weight: 700;
+  font-size: 24px;
+  letter-spacing: -4px;
+}
+
+.sidebar {
+  margin: 0;
+  padding: 0;
+  width: 150px;
+  background-color: #fafefc;
+  position: fixed;
+  height: 100%;
+  overflow: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  top: 0;
+  left: 0;
+  z-index: 1000;
+}
+
+.sidebar-content {
+  font-family: "Outfit";
+  font-weight: 600;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.sidebar-content a:hover {
+  color: #182c21;
+}
+
+.sidebar-content a {
+  color: #385345;
+  padding: 16px;
+  text-align: center;
+  text-decoration: none;
+}
