@@ -3,6 +3,10 @@ package main
 import (
 	"embed"
 
+	// "path/filepath"
+	// "strings"
+	// "fmt"
+	// "net/http"
 	"github.com/wailsapp/wails/v2"
 	"github.com/wailsapp/wails/v2/pkg/options"
 	"github.com/wailsapp/wails/v2/pkg/options/assetserver"
@@ -17,9 +21,9 @@ func main() {
 
 	// Create application with options
 	err := wails.Run(&options.App{
-		Title:  "Digital_deculutterer",
+		Title:  "Serpico",
 		Width:  1024,
-		Height: 768,
+		Height: 668,
 		AssetServer: &assetserver.Options{
 			Assets: assets,
 		},

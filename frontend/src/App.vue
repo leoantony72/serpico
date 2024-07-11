@@ -9,7 +9,7 @@
 <script setup>
 import Header from "./components/Navigation.vue";
 import Sidebar from "./components/Sidebar.vue";
-import Upload from "./components/Organize.vue";
+// import Upload from "./components/Organize.vue";
 import { RouterView } from 'vue-router';
 
 

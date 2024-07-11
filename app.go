@@ -6,15 +6,20 @@ import (
 	"os"
 	"path/filepath"
 	"time"
+	"net/http"
+	"strings"
 	"syscall"
 	"strconv"
 	"github.com/wailsapp/wails/v2/pkg/runtime"
+	"Digital_deculutterer/duplicate"
+	// "sort"
 )
 
 
 // App struct
 type App struct {
 	ctx context.Context
+	selectedFolder string
 }
 
 // NewApp creates a new App application struct
@@ -26,7 +31,26 @@ func NewApp() *App {
 // so we can call the runtime methods
 func (a *App) startup(ctx context.Context) {
 	a.ctx = ctx
+
+	http.HandleFunc("/assets/", func(w http.ResponseWriter, r *http.Request) {
+		if a.selectedFolder != "" {
+			filePath := strings.TrimPrefix(r.URL.Path, "/assets/")
+			fullPath := filepath.Join(a.selectedFolder, filePath)
+			http.ServeFile(w, r, fullPath)
+		} else {
+			http.Error(w, "No folder selected", http.StatusNotFound)
+		}
+	})
+
+	// Start the file server in a new goroutine
+	go func() {
+		err := http.ListenAndServe(":8080", nil)
+		if err != nil {
+			fmt.Println("Error starting file server:", err)
+		}
+	}()
 }
+
 
 // Greet returns a greeting for the given name
 func (a *App) Greet(name string) string {
@@ -63,7 +87,7 @@ func OrganizebyMonth(path string){
 		cTime := time.Unix(0, d.CreationTime.Nanoseconds())
 		// t := cTime.Month()
 		des := cTime.Month().String()
-		fmt.Printf("File: %s, Year Created: %d\n", f.Name(), des)
+		// fmt.Printf("File: %s, Year Created: %d\n", f.Name(), des)
 		
 		destDir := filepath.Join(path, des)
 		if _,ok := orgf[des]; !ok{
@@ -194,4 +218,46 @@ func (a *App) SelectDirectory() (string, error) {
 	  return "", err
 	}
 	return path, nil
+}
+func (a *App) SelectDirectoryDuplicate() (string, error) {
+	path, err := runtime.OpenDirectoryDialog(a.ctx, runtime.OpenDialogOptions{
+	  Title: "Select Folder",
+	})
+	if err != nil {
+	  return "", err
+	}
+	a.selectedFolder = path
+	return path, nil
+}
+
+func (a *App) FindDuplicates(path string) map[string][]string {
+	fileInfos, err := duplicate.LoadFilesFromFolder(path)
+    if err != nil {
+        fmt.Println("Error loading files:", err)
+        return nil
+    }
+
+    fileInfos, err = duplicate.GenerateFileHashes(fileInfos)
+    if err != nil {
+        fmt.Println("Error generating file hashes:", err)
+        return nil
+    }
+
+    duplicates := duplicate.FindDuplicates(fileInfos)
+
+    // Log the duplicates for debugging
+    fmt.Println("Found duplicates:", duplicates)
+
+    return duplicates
+}
+func (a *App) DeleteFiles(filePaths []string) error {
+    for _, filePath := range filePaths {
+        err := os.Remove(filePath)
+        if err != nil {
+            fmt.Println("Error deleting file:", filePath, err)
+            return err
+        }
+        fmt.Println("Deleted file:", filePath)
+    }
+    return nil
 }
