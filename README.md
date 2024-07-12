@@ -1,11 +1,14 @@
-# README
+# Serpico: File Organizing App  [![ProductHunt](https://img.shields.io/badge/producthunt-DA552F?style=for-the-badge&logo=producthunt&logoColor=white)](https://www.producthunt.com/posts/serpico-file-organizing-app)
 
-## About
 
-This is the official Wails Vue template.
+Simplify your digital life with Serpico, the ultimate app for organizing your files with precision and ease. Designed to help you manage and declutter your digital space, Serpico organizes your files by month, year, and file type.
 
-You can configure the project by editing `wails.json`. More information about the project settings can be found
-here: https://wails.io/docs/reference/project-config
+Key Features:
+- Automatic File Organization: Serpico intelligently categorizes your files by month, year, and file type, making it easy to navigate through your digital archive.
+- User-Friendly Interface: Enjoy a clean and intuitive interface that makes organizing and accessing your files a breeze.
+- Secure and Reliable: Trust Serpico to handle your files securely, with robust encryption and backup options to keep your data safe.
+
+With Serpico, managing your digital files has never been easier. Whether you're a professional, a student, or just looking to declutter your personal files, Serpico is your go-to solution for a more organized digital life.
 
 ## Live Development
 
